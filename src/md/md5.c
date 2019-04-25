@@ -6,13 +6,13 @@
 /*   By: hnam <hnam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:10:08 by hnam              #+#    #+#             */
-/*   Updated: 2019/04/23 11:56:12 by hnam             ###   ########.fr       */
+/*   Updated: 2019/04/25 10:01:46 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-uint	g_md5_r[64] =
+uint		g_md5_r[64] =
 {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
@@ -20,7 +20,7 @@ uint	g_md5_r[64] =
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 };
 
-uint	g_md5_k[64] =
+uint		g_md5_k[64] =
 {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -40,7 +40,7 @@ uint	g_md5_k[64] =
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-void	md5_loop(int i, t_md *md)
+static void	md5_loop(int i, t_md *md)
 {
 	if (0 <= i && i < 16)
 	{
@@ -69,7 +69,7 @@ void	md5_loop(int i, t_md *md)
 	md->b += LEFT_ROTATE(md->f, g_md5_r[i]);
 }
 
-void	md5_process(int set, t_md *md)
+static void	md5_process(int set, t_md *md)
 {
 	int i;
 	int j;
@@ -94,9 +94,9 @@ void	md5_process(int set, t_md *md)
 	md->D += md->d;
 }
 
-void	md5_init(char *s, t_md *md)
+static void	md5_init(char *s, t_md *md)
 {
-	uint		i;
+	int			i;
 	uint64_t	bit_len;
 
 	md->A = 0x67452301;
@@ -105,29 +105,29 @@ void	md5_init(char *s, t_md *md)
 	md->D = 0x10325476;
 	md->f = 0;
 	md->g = 0;
-	md->set = (ft_strlen(s) + 8) / 64 + 1;
-	md->n = (unsigned char *)malloc(64 * md->set);
+	md->set = s ? (ft_strlen(s) + 8) / 64 + 1 : 1;
+	md->n = (u_char *)malloc(64 * md->set);
 	i = -1;
-	while (++i < 64 * md->set)
+	while (++i < (int)(64 * md->set))
 		md->n[i] = 0;
 	i = -1;
-	while (s[++i])
+	while (s && s[++i])
 		md->n[i] = s[i];
-	md->n[i] = 1 << 7;
+	md->n[i == -1 ? 0 : i] = 1 << 7;
 	bit_len = i << 3;
 	i = -1;
 	while (++i < 8)
-		md->n[64 * md->set - 8 + i] = ((char*)(&bit_len))[i];
+		md->n[64 * md->set - 8 + i] = bit_len >> (i * 8);
 }
 
-void	md5_hash(char *s)
+void		md5_hash(char *s)
 {
 	t_md	md;
-	uint	set;
+	int		set;
 
 	md5_init(s, &md);
 	set = -1;
-	while (++set < md.set)
+	while (++set < (int)(md.set))
 		md5_process(set, &md);
 	reverse_bits(&md.A);
 	reverse_bits(&md.B);

@@ -6,7 +6,7 @@
 /*   By: hnam <hnam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:31:49 by hnam              #+#    #+#             */
-/*   Updated: 2019/04/23 11:40:35 by hnam             ###   ########.fr       */
+/*   Updated: 2019/04/25 16:13:26 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@
 # define E_USAGE -12
 # define E_COMMAND -13
 
-# define NUM_COMMAND 2
-
 # define LEFT_ROTATE(n, d) ((n << d) | (n >> (32 - d)))
 # define RIGHT_ROTATE(n, d) ((n >> d) | (n << (32 - d)))
+# define RIGHT_ROTATE_64(n, d) ((n >> d) | (n << (64 - d)))
 
 typedef	struct	s_flags
 {
@@ -83,33 +82,46 @@ typedef struct	s_sha
 	uint		set;
 }				t_sha;
 
+typedef struct	s_sha5
+{
+	uint64_t	H[8];
+	uint64_t	a;
+	uint64_t	b;
+	uint64_t	c;
+	uint64_t	d;
+	uint64_t	e;
+	uint64_t	f;
+	uint64_t	g;
+	uint64_t	h;
+	u_char		*n;
+	uint64_t	w[80];
+	uint64_t	set;
+}				t_sha5;
 
 void			handle_input(int i, int ac, char *av[], t_ssl *ssl);
 int				get_command(char *cmd);
 void			flag_handler(char c, t_ssl *ssl, int *ac);
+void			stdin_mode(int ac, t_ssl *ssl);
+void			file_mode(int fd, t_ssl *ssl, char *file);
 
 void			md5_hash(char *s);
-void			md5_init(char *s, t_md *md);
-void			md5_loop(int i, t_md *md);
-void			md5_process(int set, t_md *md);
 
+void			sha224_hash(char *s);
 void			sha256_hash(char *s);
-void			sha256_init(char *s, t_sha *sha);
-void			sha256_loop(int i, t_sha *sha);
-void			sha256_process(int set, t_sha *sha);
-void			sha256_pre(int set, t_sha *sha);
-
+void			sha384_hash(char *s);
+void			sha512_hash(char *s);
 
 void			error_alert(int code, char *input);
 void			error_exit(int code, char *input);
 void			reverse_bits(uint *c);
 
-
-
 static	t_sdp	g_ssl_dp[] =
 {
 	{"md5", md5_hash},
+	{"sha224", sha224_hash},
 	{"sha256", sha256_hash},
+	{"sha384", sha384_hash},
+	{"sha512", sha512_hash},
 	{NULL, NULL}
 };
 

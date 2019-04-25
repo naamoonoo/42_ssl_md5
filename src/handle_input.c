@@ -8,7 +8,7 @@ int		get_command(char *cmd)
 	while (g_ssl_dp[++i].command)
 		if(ft_strcmp(g_ssl_dp[i].command, cmd) == 0)
 			break;
-	if (i == NUM_COMMAND)
+	if (!g_ssl_dp[i].command)
 		error_exit(E_COMMAND, cmd);
 	return i;
 }
@@ -61,12 +61,14 @@ void	file_mode(int fd, t_ssl *ssl, char *file)
 	{
 		input = ft_strjoin(tmp, "\n");
 		free(tmp);
+		tmp = ft_strdup(ssl->dp.command);
 		!ssl->flags.q && !ssl->flags.r ?
-			FP("%s (%s) = ", ssl->dp.command, file) : 0;
+			FP("%s (%s) = ", ft_str_upper(tmp), file) : 0;
 		ssl->dp.f(input);
 		ssl->flags.r ? FP(" %s", file) : 0;
 		FP("\n");
 		free(input);
+		free(tmp);
 	}
 	else
 		error_alert(E_FOLDER, file);
@@ -76,17 +78,20 @@ void	file_mode(int fd, t_ssl *ssl, char *file)
 void	handle_input(int i, int ac, char *av[], t_ssl *ssl)
 {
 	int		fd;
+	char	*tmp;
 
 	stdin_mode(ac, ssl);
 	while (av[i])
 	{
 		if (ft_strcmp(av[i], "-s") == 0)
 		{
-			!ssl->flags.q && !ssl->flags.r ?
-				FP("%s (\"%s\") = ", ssl->dp.command, av[++i]) : 0;
+			tmp = ft_strdup(ssl->dp.command);
+			if (!ssl->flags.q && !ssl->flags.r)
+				FP("%s (\"%s\") = ", ft_str_upper(tmp), av[++i]);
 			ssl->dp.f(av[i]);
 			ssl->flags.r ? FP(" %s", av[i]) : 0;
 			FP("\n");
+			free(tmp);
 		}
 		else if ((fd = open(av[i], O_RDONLY)) > 0)
 			file_mode(fd, ssl, av[i]);

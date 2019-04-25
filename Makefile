@@ -2,7 +2,7 @@ NAME	=	ssl
 
 CC		=	gcc
 DEBUG	=	-g -fsanitize=address
-CFLAGS	=	-Wall -Wextra -Werror -Iincludes  $(DEBUG)
+CFLAGS	=	-Wall -Wextra -Werror -Iincludes
 
 SRC		=	$(wildcard src/*.c)
 O_SRC	=	$(patsubst src/%.c, obj/%.o, $(SRC))

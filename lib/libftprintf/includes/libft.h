@@ -6,7 +6,7 @@
 /*   By: hnam <hnam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:24:35 by hnam              #+#    #+#             */
-/*   Updated: 2019/04/16 23:25:13 by hnam             ###   ########.fr       */
+/*   Updated: 2019/04/23 15:14:35 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int					ft_hidenp(char *s1, char *s2);
 int					ft_strchr_idx(const char *s, int c);
 char				*ft_strtrim_by(char const *s, char condition);
 char				*ft_strjoin_by(char const *s1, char const *s2, char *c);
+char				*ft_str_upper(char *s);
+char				*ft_str_lower(char *s);
 
 /*
 **---------------------number descriptor---------------------

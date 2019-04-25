@@ -12,9 +12,5 @@ int	main(int ac, char *av[])
 	while (av[i] && ft_start_with(av[i], '-') && (*(av[i] + 1) != 's'))
 		flag_handler(*(av[i++] + 1), &ssl, &ac);
 	handle_input(i, ac, av, &ssl);
-
-
-	// while (1)
-	// 	sleep(1);
 	return (0);
 }

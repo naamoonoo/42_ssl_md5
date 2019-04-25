@@ -10,12 +10,17 @@ void	error_alert(int code, char *input)
 
 void	error_exit(int code, char *input)
 {
+	int i;
+
+	i = -1;
 	if (code == E_USAGE)
 		FP("usage: ft_ssl command [command opts] [command args]");
 	else if (code == E_COMMAND)
 	{
 		FP("ft_ssl: Error: '%s' is an invalid command.\n", input);
-		FP("Standard commands:\nMessage Digest commands:\nmd5\nsha256\n");
+		FP("Standard commands:\n\nMessage Digest commands:\n");
+		while (g_ssl_dp[++i].command)
+			FP("%s\n", g_ssl_dp[i].command);
 	}
 	else if (code == E_FLAG)
 	{
