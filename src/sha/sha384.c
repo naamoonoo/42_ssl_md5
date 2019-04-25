@@ -63,7 +63,7 @@ static void	sha384_pre(int set, t_sha5 *sha)
 		j = -1;
 		sha->w[i] = 0;
 		while (++j < 8)
-			sha->w[i] += (u_int64_t)sha->n[set * 80 + i * 8 + j] << (8 * (7 - j));
+			sha->w[i] += (u_int64_t)sha->n[set * 128 + i * 8 + j] << (8 * (7 - j));
 	}
 	set = 1;
 	i = 15;
