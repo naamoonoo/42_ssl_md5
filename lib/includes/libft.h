@@ -6,7 +6,7 @@
 /*   By: hnam <hnam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:24:35 by hnam              #+#    #+#             */
-/*   Updated: 2019/04/23 15:14:35 by hnam             ###   ########.fr       */
+/*   Updated: 2019/06/05 12:07:30 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_list
 # define ABS(x) ((x) < 0 ? (x) * -1 : (x))
 # define MAX_INT -2147483648
 # define IS_EXIST(x) ((x) ? 1 : 0)
+# define SWAP(x, y, temp) ( (temp)=(x), (x)=(y), (y)=(temp) )
 
 /*
 **---------------------memory handling---------------------
@@ -93,6 +94,8 @@ char				*ft_strtrim_by(char const *s, char condition);
 char				*ft_strjoin_by(char const *s1, char const *s2, char *c);
 char				*ft_str_upper(char *s);
 char				*ft_str_lower(char *s);
+int					ft_toupper(int c);
+int					ft_tolower(int c);
 
 /*
 **---------------------number descriptor---------------------
@@ -107,11 +110,15 @@ int64_t				ft_pow(int64_t base, int times);
 uint64_t			ft_pow_u(uint64_t base, int times);
 int					ft_pgcd(int a, int b);
 void				itoa_minus_hande(int64_t *n, char *res, int *len, int *i);
-char				*ft_itoa(int64_t n);
+char				*ft_itoa(int n);
 char				*ft_itoa_base(int64_t n, int str_base, int len);
 char				*ft_itoa_base_u(uint64_t n, int str_base, int len);
 int					get_big(int a, int b);
 int					get_small(int a, int b);
+long				ft_atol(const char *str);
+void				ft_n_swap(int *a, int *b);
+
+
 
 /*
 **---------------------checking---------------------
@@ -122,8 +129,6 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
-int					ft_toupper(int c);
-int					ft_tolower(int c);
 int					ft_is_space(char c);
 int					ft_start_with(char *s, char c);
 
@@ -152,5 +157,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 */
 
 int					get_next_line(const int fd, char **line);
+int					get_file(int fd, char **file);
+
 
 #endif

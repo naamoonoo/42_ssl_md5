@@ -25,12 +25,12 @@ obj/%.o	: 	src/%.c
 			$(CC) $(CFLAGS) $(OPTION) -c -o $@ $<
 
 $(NAME)	: 	obj $(OBJS)
-			cd lib/libftprintf && make
-			mv lib/libftprintf/libftprintf.a .
+			cd lib && make
+			mv lib/libftprintf.a .
 			$(CC) -o $(NAME) $(CFLAGS) $(SRCS) libftprintf.a
 
 clean	:
-			-cd lib/libftprintf && make clean
+			-cd lib && make clean
 			-rm -rf obj
 
 fclean	: 	clean

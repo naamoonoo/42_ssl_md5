@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andY <andY@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hnam <hnam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 19:42:32 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/31 01:01:20 by andY             ###   ########.fr       */
+/*   Updated: 2019/05/13 12:41:39 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa(int64_t n)
+static void	minus_handling(int *n, char *res, int *len, int *i)
+{
+	*n = ABS(*n);
+	res[*i] = '-';
+	*i = *i + 1;
+	*len = *len + 1;
+}
+
+char		*ft_itoa(int n)
 {
 	char	*res;
 	int		len;
@@ -21,13 +29,13 @@ char	*ft_itoa(int64_t n)
 
 	i = 0;
 	len = ft_numlen(ABS(n), 10);
-	dv = ft_pow(10, len);
+	dv = ft_pow(10, len - 1);
 	if (!(res = (char *)malloc((n < 0 ? len + 2 : len + 1) * sizeof(char))))
 		return (NULL);
 	if (n == MAX_INT)
 		return (ft_strcpy(res, "-2147483648"));
 	if (n < 0)
-		itoa_minus_hande(&n, res, &len, &i);
+		minus_handling(&n, res, &len, &i);
 	while (i < len)
 	{
 		res[i++] = n / dv + '0';

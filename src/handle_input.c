@@ -54,10 +54,10 @@ void	file_mode(int fd, t_ssl *ssl, char *file)
 {
 	char	*tmp;
 	char	*input;
-	int		gnl;
+	// int		gnl;
 
-	gnl = get_next_line(fd, &tmp);
-	if (gnl > 0)
+	// gnl = get_next_line(fd, &tmp);
+	if (get_file(fd, &tmp) >= 0)
 	{
 		input = ft_strjoin(tmp, "\n");
 		free(tmp);

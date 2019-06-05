@@ -6,7 +6,7 @@
 /*   By: hnam <hnam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:31:49 by hnam              #+#    #+#             */
-/*   Updated: 2019/04/25 16:13:26 by hnam             ###   ########.fr       */
+/*   Updated: 2019/06/05 12:10:40 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 # include <math.h>
 
-# include "../lib/libftprintf/includes/ft_printf.h"
-# include "../lib/libftprintf/includes/libft.h"
+# include "../lib/includes/ft_printf.h"
+# include "../lib/includes/libft.h"
 
 # define E_FOLDER -9
 # define E_INPUT -10
