@@ -137,6 +137,6 @@ void		sha384_hash(char *s)
 		sha384_process(set, &sha);
 	set = -1;
 	while (++set < 6)
-		FP("%.8lx", sha.H[set]);
+		FP("%.16lx", sha.H[set]);
 	free(sha.n);
 }

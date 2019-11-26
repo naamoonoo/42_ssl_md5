@@ -168,6 +168,6 @@ void		sha512_hash(char *s)
 		sha512_process(set, &sha);
 	set = -1;
 	while (++set < 8)
-		FP("%.8lx", sha.H[set]);
+		FP("%.16lx", sha.H[set]);
 	free(sha.n);
 }

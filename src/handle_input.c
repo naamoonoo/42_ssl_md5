@@ -54,21 +54,20 @@ void	file_mode(int fd, t_ssl *ssl, char *file)
 {
 	char	*tmp;
 	char	*input;
-	// int		gnl;
 
-	// gnl = get_next_line(fd, &tmp);
 	if (get_file(fd, &tmp) >= 0)
 	{
 		input = ft_strjoin(tmp, "\n");
 		free(tmp);
 		tmp = ft_strdup(ssl->dp.command);
 		!ssl->flags.q && !ssl->flags.r ?
-			FP("%s (%s) = ", ft_str_upper(tmp), file) : 0;
+			FP("%s(%s)= ", ft_str_upper(tmp), file) : 0;
 		ssl->dp.f(input);
 		ssl->flags.r ? FP(" %s", file) : 0;
 		FP("\n");
 		free(input);
 		free(tmp);
+		ssl->is_file_read = 1;
 	}
 	else
 		error_alert(E_FOLDER, file);
@@ -83,11 +82,13 @@ void	handle_input(int i, int ac, char *av[], t_ssl *ssl)
 	stdin_mode(ac, ssl);
 	while (av[i])
 	{
-		if (ft_strcmp(av[i], "-s") == 0)
+		if (ssl->is_file_read == 0 && ft_strcmp(av[i], "-s") == 0)
 		{
 			tmp = ft_strdup(ssl->dp.command);
 			if (!ssl->flags.q && !ssl->flags.r)
 				FP("%s (\"%s\") = ", ft_str_upper(tmp), av[++i]);
+			else
+				i++;
 			ssl->dp.f(av[i]);
 			ssl->flags.r ? FP(" %s", av[i]) : 0;
 			FP("\n");

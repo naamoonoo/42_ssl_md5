@@ -47,6 +47,7 @@ typedef struct	s_ssl
 {
 	t_sdp		dp;
 	t_f			flags;
+	int			is_file_read;
 }				t_ssl;
 
 typedef struct	s_md
